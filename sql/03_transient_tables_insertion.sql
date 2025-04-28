@@ -1,8 +1,13 @@
+-- Create Schema for the Invalid records tables
+
+CREATE SCHEMA SNAKE_ECOMERCE_DB.INVALID_DATA;
+
+
 ----------------------------------------------
 ------------INVALID DATE RECORDS--------------
 ----------------------------------------------
 
-CREATE TRANSIENT TABLE TD_INVALID_DATE_FORMAT ( -- Table for records with Invalid Dates
+CREATE TRANSIENT TABLE SNAKE_ECOMERCE_DB.INVALID_DATA.TD_INVALID_DATE_FORMAT ( -- Table for records with Invalid Dates
     Order_ID INT,
     Customer_ID VARCHAR,
     Customer_Name VARCHAR,
@@ -18,7 +23,7 @@ CREATE TRANSIENT TABLE TD_INVALID_DATE_FORMAT ( -- Table for records with Invali
 );
 
 
-INSERT INTO TD_INVALID_DATE_FORMAT (
+INSERT INTO SNAKE_ECOMERCE_DB.INVALID_DATA.TD_INVALID_DATE_FORMAT (
     Order_ID,
     Customer_ID,
     Customer_Name,
@@ -45,7 +50,7 @@ SELECT DISTINCT
     Payment_Method,
     Shipping_Address,
     Status
-FROM ECOMERCE_ORDERS_RAW
+FROM SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 WHERE Flag = 'INVALID_DATE';
 
 
@@ -54,7 +59,7 @@ WHERE Flag = 'INVALID_DATE';
 ----------------------------------------------
 
 -- Table for Records without Shipping Address
-CREATE TABLE TD_FOR_REVIEW (
+CREATE TABLE SNAKE_ECOMERCE_DB.INVALID_DATA.TD_FOR_REVIEW (
     Order_ID INT,
     Customer_ID VARCHAR,
     Customer_Name VARCHAR,
@@ -70,7 +75,7 @@ CREATE TABLE TD_FOR_REVIEW (
 );
 
 
-INSERT INTO TD_FOR_REVIEW (
+INSERT INTO SNAKE_ECOMERCE_DB.INVALID_DATA.TD_FOR_REVIEW (
     Order_ID,
     Customer_ID,
     Customer_Name,
@@ -97,7 +102,7 @@ SELECT DISTINCT
     Payment_Method,
     Shipping_Address,
     Status
-FROM ECOMERCE_ORDERS_RAW
+FROM SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 WHERE Flag = 'MISSING_SHIPPING_ADDRESS';
 
 
@@ -106,7 +111,7 @@ WHERE Flag = 'MISSING_SHIPPING_ADDRESS';
 ----------------INVALID QUANTITY--------------
 ----------------------------------------------
 
-CREATE TRANSIENT TABLE TD_INVALID_QUANTITY (
+CREATE TRANSIENT TABLE SNAKE_ECOMERCE_DB.INVALID_DATA.TD_INVALID_QUANTITY (
     Order_ID INT,
     Customer_ID VARCHAR,
     Customer_Name VARCHAR,
@@ -122,7 +127,7 @@ CREATE TRANSIENT TABLE TD_INVALID_QUANTITY (
 );
 
 
-INSERT INTO TD_INVALID_QUANTITY (
+INSERT INTO SNAKE_ECOMERCE_DB.INVALID_DATA.TD_INVALID_QUANTITY (
     Order_ID,
     Customer_ID,
     Customer_Name,
@@ -149,7 +154,7 @@ SELECT DISTINCT
     Payment_Method,
     Shipping_Address,
     Status
-FROM ECOMERCE_ORDERS_RAW
+FROM SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 WHERE Flag = 'INVALID_QUANTITY_PRICE';
 
 
@@ -158,7 +163,7 @@ WHERE Flag = 'INVALID_QUANTITY_PRICE';
 ----------------SUSPICIOUS RECORDS------------
 ----------------------------------------------
 
-CREATE TRANSIENT TABLE TD_SUSPICIOUS_RECORDS (
+CREATE TRANSIENT TABLE SNAKE_ECOMERCE_DB.INVALID_DATA.TD_SUSPICIOUS_RECORDS (
     Order_ID INT,
     Customer_ID VARCHAR,
     Customer_Name VARCHAR,
@@ -174,7 +179,7 @@ CREATE TRANSIENT TABLE TD_SUSPICIOUS_RECORDS (
 );
 
 
-INSERT INTO TD_SUSPICIOUS_RECORDS (
+INSERT INTO SNAKE_ECOMERCE_DB.INVALID_DATA.TD_SUSPICIOUS_RECORDS (
     Order_ID,
     Customer_ID,
     Customer_Name,
@@ -201,7 +206,7 @@ SELECT DISTINCT
     Payment_Method,
     Shipping_Address,
     Status
-FROM ECOMERCE_ORDERS_RAW
+FROM SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 WHERE Flag = 'MISSING_CUSTOMER_INFO';
 
 

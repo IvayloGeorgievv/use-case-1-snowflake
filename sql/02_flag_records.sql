@@ -1,5 +1,5 @@
 -- Based on Order of Priority I update the flag in the raw data records and later that would help me with inserting them into correct tables
-UPDATE ECOMERCE_ORDERS_RAW
+UPDATE SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 SET Flag = CASE
     WHEN TRY_TO_DATE(Order_Date, 'YYYY-MM-DD') IS NULL
         THEN 'INVALID_DATE'
@@ -17,5 +17,5 @@ END;
 
 --Count of records with different flags
 SELECT Flag, COUNT(*) AS Record_Count
-FROM ECOMERCE_ORDERS_RAW
+FROM SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW
 GROUP BY Flag;

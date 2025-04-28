@@ -1,14 +1,11 @@
 CREATE DATABASE SNAKE_ECOMERCE_DB;
 
-USE DATABASE SNAKE_ECOMERCE_DB;
+CREATE SCHEMA SNAKE_ECOMERCE_DB.RAW_DATA;
 
-CREATE SCHEMA RAW_STAGE;
-
-USE SCHEMA RAW_STAGE;
 
 -- Creating Temporary Table for Raw Data in a VARCHAR format for every column
 -- That way we don't get error on records with invalid data
-CREATE TEMPORARY TABLE ECOMERCE_ORDERS_RAW (
+CREATE TEMPORARY TABLE SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW (
     Order_ID VARCHAR,
     Customer_ID VARCHAR,
     Customer_Name VARCHAR,
@@ -25,16 +22,15 @@ CREATE TEMPORARY TABLE ECOMERCE_ORDERS_RAW (
 );
 
 
-CREATE FILE FORMAT CSV_ECOMERCE_FORMAT
-TYPE = CSV -- Type of file
-FIELD_OPTIONALLY_ENCLOSED_BY = '"'  -- Some columns/attributes can be enclosed by double quotes - " "
-SKIP_HEADER = 1; -- Skipping the header row so only data rows are processed
+-- Using the DB we've created for global tools in class and the file format I've created then
+-- That way we know there are all the stages and everything is in one place
+CREATE STAGE _SNAKE_GLOBAL_TOOLS.STAGES.STG_ECOMERCE_DATA
+FILE_FORMAT = _SNAKE_GLOBAL_TOOLS.STAGES.CSV_FORMAT;
 
-CREATE STAGE EXTERNAL_STAGE_CSV_ECOMERCE_DATA
-FILE_FORMAT = CSV_ECOMERCE_FORMAT; 
+-- After creating the stage we go into the Snowflake UI to upload the csv files 
+-- Then we execute the next COPY INTO statement!
 
-
-COPY INTO ECOMERCE_ORDERS_RAW (
+COPY INTO SNAKE_ECOMERCE_DB.RAW_DATA.ECOMERCE_ORDERS_RAW (
     Order_ID,
     Customer_ID,
     Customer_Name,
@@ -48,6 +44,6 @@ COPY INTO ECOMERCE_ORDERS_RAW (
     Shipping_Address,
     Status
 )
-FROM @EXTERNAL_STAGE_CSV_ECOMERCE_DATA/ecommerce_orders.csv; -- add file with it's name and format
+FROM @_SNAKE_GLOBAL_TOOLS.STAGES.STG_ECOMERCE_DATA/ecommerce_orders.csv; -- add file with it's name and format
 
 
